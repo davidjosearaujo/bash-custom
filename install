@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "source $PWD/.bash_custom" >> ~/.profile
