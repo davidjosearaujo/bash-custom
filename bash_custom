@@ -1,3 +1,11 @@
+# ParrotOS docker container launcher
 parrot() {
 	podman run --rm -it --network host -v $PWD:/work $@ docker.io/parrotsec/security:latest
+}
+
+# Google's Android container launcher
+androidemulator() {
+	docker run --detach --rm -e ADBKEY="$(cat ~/.android/adbkey)" --device /dev/kvm --publish 8554:8554/tcp --publish 5555:5555/tcp us-docker.pkg.dev/android-emulator-268719/images/30-google-x64:30.1.2
+	adb connect localhost:5555
+	adb wait-for-device	
 }
