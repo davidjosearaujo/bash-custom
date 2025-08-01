@@ -5,7 +5,18 @@ parrot() {
 
 # Google's Android container launcher
 androidemulator() {
+	echo "Launching container..."
 	docker run --detach --rm -e ADBKEY="$(cat ~/.android/adbkey)" --device /dev/kvm --publish 8554:8554/tcp --publish 5555:5555/tcp us-docker.pkg.dev/android-emulator-268719/images/30-google-x64:30.1.2
 	adb connect localhost:5555
-	adb wait-for-device	
+	adb wait-for-device
+	echo "ADB connected!"
+	echo "Downloading Frida server"
+	wget https://github.com/frida/frida/releases/download/17.2.14/frida-server-17.2.14-android-x86_64.xz -O /tmp/frida-server.xz
+	echo "Unzipping Frida"
+	7z x -o/tmp /tmp/frida-server.xz
+	echo "Running Frida server"
+	adb push /tmp/frida-server /data/local/tmp/
+	adb shell chmod +x /data/local/tmp/frida-server
+	adb shell /data/local/tmp/frida-server -D &
+	echo "Frida server started!"
 }
