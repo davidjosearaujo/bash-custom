@@ -3,6 +3,11 @@ parrot() {
 	podman run --rm -it --network host -v $PWD:/work $@ docker.io/parrotsec/security:latest
 }
 
+# ParrotOS VM
+parrotvm() {
+	qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=parrot.img -m 2G -cpu host -smp 4 -vga virtio -display sdl,gl=on
+}
+
 # Google's Android container launcher
 androidemulator() {
 	echo "Launching container..."
