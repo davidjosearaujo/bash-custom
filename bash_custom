@@ -13,7 +13,7 @@ parrotvm() {
 		if [ "$param" -eq "CORES" ]; then CORES=0; elif [ "$CORES" -eq 0 ]; then CORES=$param && echo "Number of cores set to:\t$param"; fi
 		if [ "$param" -eq "MEMORY" ]; then MEMORY=0; elif [ "$MEMORY" -eq 0 ]; then MEMORY=$param && echo "Memory size set to:\t$param"; fi
 	done
-	qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=~/VM/parrot.img -m 2G -cpu host -smp 4 -net user,hostfwd=tcp::$SSHPORT-:22 -net nic -vga virtio -display sdl,gl=on &
+	qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=~/VM/parrot.img -m $MEMORY -cpu host -smp $CORES -net user,hostfwd=tcp::$SSHPORT-:22 -net nic -vga virtio -display sdl,gl=on &
 }
 
 # Google's Android container launcher
