@@ -5,7 +5,7 @@ parrot() {
 
 # ParrotOS VM
 parrotvm() {
-        SSHPORT=5555
+        SSHPORT=2222
         CORES=4
         MEMORY=2G
 
