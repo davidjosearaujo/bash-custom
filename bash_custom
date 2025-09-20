@@ -1,13 +1,13 @@
 # ParrotOS docker container launcher
 parrot() {
-	podman run --rm -it --network host -v $PWD:/work $@ docker.io/parrotsec/security:latest
+	podman run --rm -it --network host --entrypoint /bin/bash -v $PWD:/work $@ docker.io/parrotsec/security:latest -c "apt update -qq && /bin/bash"
 }
 
 # ParrotOS VM
 parrotvm() {
         SSHPORT=2222
         CORES=4
-        MEMORY=2G
+        MEMORY=4G
 
         while [[ "$#" -gt 0 ]]; do
             case "$1" in
@@ -38,7 +38,7 @@ parrotvm() {
         echo "SSH Forward Port: $SSHPORT"
         echo "---"
 
-        qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=~/VM/parrot.img -m $MEMORY -cpu host -smp $CORES -net user,hostfwd=tcp::$SSHPORT-:22 -net nic -vga virtio -display sdl,gl=on &
+        qemu-system-x86_64 -enable-kvm -boot menu=on -drive file=~/VM/parrot.img -m $MEMORY -cpu host -smp $CORES -net user,hostfwd=tcp::$SSHPORT-:22 -net nic -vga virtio -display sdl,gl=on
 }
 
 # Google's Android container launcher
