@@ -3,6 +3,15 @@ parrot() {
 	podman run --rm -it --network host --entrypoint /bin/bash -v $PWD:/work $@ docker.io/parrotsec/security:latest -c "apt update -qq && /bin/bash"
 }
 
+remnux() {
+    podman run --rm -it -u remnux docker.io/remnux/remnux-distro:latest bash
+}
+
+mobsf() {
+    podman run --rm -it -p 8000:8000 docker.io/opensecurity/mobile-security-framework-mobsf:latest &
+    echo "MoBSF open in port 8000 with credentials mobsf/mobsf"
+}
+
 # ParrotOS VM
 parrotvm() {
         SSHPORT=2222
